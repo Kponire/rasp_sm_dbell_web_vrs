@@ -18,3 +18,5 @@ psycopg2-binary
 flask-migrate
 python-dotenv
 python-decouple
+flask-socketio 
+eventlet
