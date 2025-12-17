@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 import base64
 import uuid
 from datetime import datetime
-from web_backend.supabase_client import upload_captured_face
+from supabase_client import upload_captured_face
 
 images_bp = Blueprint('images', __name__)
 
@@ -61,7 +61,7 @@ def get_captured_images(device_id):
     user_id = user_identity['id']
     
     # Verify user owns the device
-    from web_backend.models import Device
+    from models import Device
     try:
         device_id = uuid.UUID(device_id)
     except ValueError:
@@ -72,7 +72,7 @@ def get_captured_images(device_id):
         return jsonify({'error': 'Device not found or unauthorized'}), 404
     
     # Get images from Supabase
-    from web_backend.supabase_client import list_files_in_bucket
+    from supabase_client import list_files_in_bucket
     files = list_files_in_bucket('captured-faces', device_id)
     
     images = []

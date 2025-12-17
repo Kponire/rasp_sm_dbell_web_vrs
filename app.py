@@ -1,16 +1,16 @@
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
-from web_backend.blueprints.auth import auth_bp
-from web_backend.blueprints.users import users_bp
-from web_backend.blueprints.notifications import notifications_bp
-from web_backend.blueprints.video import video_bp
-from web_backend.blueprints.door import door_bp
-from web_backend.blueprints.watchlist import watchlist_bp
-from web_backend.blueprints.images import images_bp
-from web_backend.config import Config
+from blueprints.auth import auth_bp
+from blueprints.users import users_bp
+from blueprints.notifications import notifications_bp
+from blueprints.video import video_bp
+from blueprints.door import door_bp
+from blueprints.watchlist import watchlist_bp
+from blueprints.images import images_bp
+from config import Config
 from datetime import datetime
-from web_backend.models import db
+from models import db
 from flask_cors import CORS
 from flask_migrate import Migrate
 
@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 db.init_app(app)
-migrate = Migrate(app, db, directory="web_backend/migrations")
+migrate = Migrate(app, db, directory="migrations")
 jwt = JWTManager(app)
 CORS(app, supports_credentials=True, expose_headers=["Authorization"])
 

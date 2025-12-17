@@ -2,7 +2,7 @@ import json
 import uuid
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from web_backend.models import db, DoorLock, Device
+from models import db, DoorLock, Device
 from datetime import datetime
 
 door_bp = Blueprint('door', __name__)

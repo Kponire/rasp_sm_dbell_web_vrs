@@ -1,11 +1,11 @@
 from flask import Blueprint, json, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from web_backend.models import db, User, WatchlistMember, FaceImage, Device
+from models import db, User, WatchlistMember, FaceImage, Device
 from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
 import uuid
-from web_backend.supabase_client import (
+from supabase_client import (
     upload_watchlist_image, 
     get_watchlist_images_for_device,
     delete_watchlist_image,

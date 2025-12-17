@@ -2,14 +2,14 @@ import json
 import uuid
 from flask import Blueprint, Response, request, jsonify
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from web_backend.config import Config
+from config import Config
 import requests
 from datetime import datetime
 import maileroo
 import os
-from web_backend.models import Device, User, db, Notification
+from models import Device, User, db, Notification
 try:
-    from web_backend.notifications_service import send_email as sg_send_email, send_whatsapp
+    from notifications_service import send_email as sg_send_email, send_whatsapp
 except Exception:
     sg_send_email = None
     send_whatsapp = None
@@ -333,7 +333,7 @@ def initiate_doorbell_call():
         return jsonify({"error": "Invalid device ID format"}), 400
     
     # Get device and owner information
-    from web_backend.models import Device, User
+    from models import Device, User
     device = Device.query.filter_by(id=device_id).first()
     if not device:
         return jsonify({'error': 'Device not found'}), 404

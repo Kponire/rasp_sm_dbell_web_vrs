@@ -3,7 +3,7 @@ import io
 import uuid
 from typing import List, Dict, Optional
 from supabase import create_client, Client
-from web_backend.config import Config
+from config import Config
 import mimetypes
 
 def get_client() -> Client:
