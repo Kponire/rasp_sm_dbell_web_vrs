@@ -8,7 +8,7 @@ from datetime import datetime
 door_bp = Blueprint('door', __name__)
 
 @door_bp.route('/state', methods=['GET'])
-@jwt_required()
+#@jwt_required()
 def get_door_state():
     """Get door state for user's device"""
     user_identity_raw = get_jwt_identity()
