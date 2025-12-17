@@ -1,6 +1,7 @@
 import json
 import uuid
 from flask import Blueprint, Response, request, jsonify
+import numpy as np
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from config import Config
 import requests
@@ -48,6 +49,10 @@ def send_email_notification(user_email: str, device_name: str, person_name: str,
         return False
     
     timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    if isinstance(confidence, (list, np.ndarray)):
+        confidence_value = float(np.mean(confidence))
+    else:
+        confidence_value = float(confidence)
     
     if status == "recognized":
         subject = f"✅ Door Access: {person_name} Recognized"
@@ -57,7 +62,7 @@ def send_email_notification(user_email: str, device_name: str, person_name: str,
         <p><strong>Person:</strong> {person_name}</p>
         <p><strong>Time:</strong> {timestamp}</p>
         <p><strong>Status:</strong> Access Granted</p>
-        <p><strong>Confidence:</strong> {confidence:.1%} if confidence else 'N/A'</p>
+        <p><strong>Confidence:</strong> f"{confidence_value:.1%}" if confidence else 'N/A'</p>
         <br>
         <p>This person was recognized and granted access to your property.</p>
         <p><img src="{image_url}" alt="Captured Image" style="max-width: 400px; border-radius: 8px;"></p>
@@ -109,6 +114,10 @@ def send_whatsapp_notification(phone_number: str, device_name: str, person_name:
         return False
     
     timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    if isinstance(confidence, (list, np.ndarray)):
+        confidence_value = float(np.mean(confidence))
+    else:
+        confidence_value = float(confidence)
     
     if status == "recognized":
         message = f"""
@@ -118,7 +127,7 @@ def send_whatsapp_notification(phone_number: str, device_name: str, person_name:
 *Device:* {device_name}
 *Time:* {timestamp}
 *Status:* Access Granted
-*Confidence:* {confidence:.1%} if confidence else 'N/A'
+*Confidence:* f"{confidence_value:.1%}" if confidence else 'N/A'
         
 This person was recognized and granted access to your property.
         
